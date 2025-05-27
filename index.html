@@ -148,7 +148,6 @@
 
         /* Profile Photo Styles */
         .profile-photo-container {
-            position: relative;
             margin-bottom: 1rem;
         }
 
@@ -160,72 +159,26 @@
             border: 4px solid transparent;
             background: var(--gradient);
             padding: 4px;
-            animation: profileFloat 6s ease-in-out infinite;
-            transition: all 0.3s ease;
-            cursor: pointer;
         }
 
+        /* Remove animations and interactivity */
+        .profile-photo-container,
+        .profile-photo {
+            animation: none; /* Remove floating animation */
+        }
+
+        /* Remove hover effects */
         .profile-photo:hover {
-            transform: scale(1.1) rotate(5deg);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.4);
+            transform: none; /* Remove scaling and rotation */
+            box-shadow: none; /* Remove shadow on hover */
         }
 
-        @keyframes profileFloat {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .profile-glow {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            right: -10px;
-            bottom: -10px;
-            background: var(--gradient);
-            border-radius: 50%;
-            opacity: 0.3;
-            animation: pulse 2s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.1); opacity: 0.6; }
-        }
-
-        .photo-upload-area {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background: var(--glass);
-            border: 2px dashed rgba(255, 255, 255, 0.3);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .photo-upload-area:hover {
-            border-color: var(--accent);
-            background: rgba(255, 255, 255, 0.15);
-            transform: scale(1.05);
-        }
-
-        .upload-icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            opacity: 0.7;
-        }
-
+        /* Remove glow and upload area styles as they are no longer needed */
+        .profile-glow,
+        .photo-upload-area,
+        .upload-icon,
         .upload-text {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            text-align: center;
-            padding: 0 1rem;
+            display: none; /* Hide these elements */
         }
 
         @keyframes fadeInUp {
@@ -477,17 +430,9 @@
                 font-size: 3rem;
             }
             
-            .profile-photo,
-            .photo-upload-area {
+            .profile-photo {
                 width: 150px;
                 height: 150px;
-            }
-            
-            .profile-glow {
-                top: -8px;
-                left: -8px;
-                right: -8px;
-                bottom: -8px;
             }
             
             .section {
@@ -593,12 +538,7 @@
         <div class="hero-content">
             <!-- Profile Photo Section -->
             <div class="profile-photo-container">
-                <div class="profile-glow"></div>
-                <div class="photo-upload-area" id="photoUploadArea">
-                    <div class="upload-icon">📸</div>
-                    <div class="upload-text">Click to add your photo</div>
-                </div>
-                <input type="file" id="photoInput" accept="image/*" style="display: none;">
+                <img src="profile-photo.jpg" class="profile-photo" alt="Profile Photo">
             </div>
             
             <div>
@@ -748,40 +688,6 @@
             }
         });
 
-        // Photo upload functionality
-        const photoInput = document.getElementById('photoInput');
-        const photoUploadArea = document.getElementById('photoUploadArea');
-        
-        photoUploadArea.addEventListener('click', () => {
-            photoInput.click();
-        });
-        
-        photoInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'profile-photo';
-                    img.alt = 'Profile Photo';
-                    
-                    // Replace upload area with actual photo
-                    photoUploadArea.innerHTML = '';
-                    photoUploadArea.appendChild(img);
-                    photoUploadArea.style.border = 'none';
-                    photoUploadArea.style.padding = '0';
-                    
-                    // Add click handler to change photo
-                    img.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        photoInput.click();
-                    });
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
         // Generate floating particles
         function createParticles() {
             const particleCount = 50;
@@ -800,7 +706,7 @@
         // Mock GitHub API call
         async function loadGitHubRepos() {
             // Replace 'yourusername' with actual GitHub username
-            const username = 'yourusername';
+            const username = 'Yashtripathi007';
             
             // Mock data for demonstration
             const mockRepos = [
@@ -843,7 +749,7 @@
                             <h3 style="margin: 0;">${repo.name}</h3>
                             <p style="margin: 0; opacity: 0.7; font-size: 0.9rem;">${repo.language}</p>
                         </div>
-                    </div>
+            </div>
                     <p style="margin-bottom: 1rem;">${repo.description}</p>
                     <div class="repo-stats">
                         <div class="stat">
